@@ -1,13 +1,18 @@
 html, body{
     height: 100%;
-    background: black;
     font-family: 'Press Start 2P', cursive;
+}
+body {
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #tetris{
     width: fit-content;
     height: 100%;
     padding: 30px;
-    margin: 0 auto;
+    /* margin: auto; */
     display: flex;
 }
 #tetris .game-wrapper {
