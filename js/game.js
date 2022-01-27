@@ -7,7 +7,6 @@ class Game {
 
     // preview area
     next;
-    preview;
     previewCanvas;
     previewContext;
     previewBoard;
@@ -29,8 +28,9 @@ class Game {
         // size
         this.game.width = BOARD_WIDTH;
         this.game.height = BOARD_HEIGHT;
-        this.game.style.width = BOARD_WIDTH + 'px';
-        this.game.style.height = BOARD_VISIBLE_HEIGHT + 'px';
+        // this.game.style.width = BOARD_WIDTH + 'px';
+        // this.game.style.height = BOARD_VISIBLE_HEIGHT + 'px';
+        this.game.style.aspectRatio = BOARD_WIDTH + '/' + BOARD_VISIBLE_HEIGHT;
 
         // record
         this.resetRecord();
@@ -42,12 +42,8 @@ class Game {
 
     previewSetup() {
         // canvas
-        this.previewCanvas = document.createElement('canvas');
+        this.previewCanvas = document.getElementById('preview-canvas');
         this.previewContext = this.previewCanvas.getContext('2d');
-
-        // preview area
-        this.preview = document.querySelector('.preview .next-piece');
-        this.preview.appendChild(this.previewCanvas);
     }
 
     start() {
@@ -214,7 +210,7 @@ class Game {
     listenEvent() {
         // keyboard
         document.body.addEventListener('keydown', (event) => {
-            if (!this.isGameOver() || !this.isPause()) {
+            if (!this.isGameOver() && !this.isPause()) {
                 this.keyboardEvent(event);
             }
         });

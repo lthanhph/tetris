@@ -1,19 +1,25 @@
 html, body{
-    min-height: 100vh;
+    height: 100%;
     background: black;
     font-family: 'Press Start 2P', cursive;
 }
 #tetris{
     width: fit-content;
+    min-width: 355px;
     height: 100%;
     padding: 30px;
     margin: 0 auto;
     display: flex;
 }
+#tetris .game-wrapper {
+    height: 100%;
+}
 #game {
     border: 1px solid black;
     object-position: center bottom;
     object-fit: cover;
+    /* width: 268px; */
+    height: 100%;
 }
 #panel {
     flex-grow: 1;
@@ -45,9 +51,10 @@ html, body{
 #panel .record .numb{
     margin: 10px auto;
 }
-#panel .preview .next-piece{
-    height: 107px;
-    width: 107px;
+#panel .next-piece #preview-canvas{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
 }
 #panel .game-pause,
 #panel .game-continue {
@@ -68,11 +75,17 @@ html, body{
 }
 
 @media screen and (max-width: 600px) {
+   
+}
+
+@media screen and (max-width: 555px) {
+    :root{
+        font-size: 14px;
+    }
     body {
         background: #6c757d;
     }
     #tetris {
-        height: 100%;
         width: 100%;
     }
     #tetris #panel{
@@ -80,15 +93,34 @@ html, body{
     }
 }
 
-@media screen and (max-width: 555px) {
-    :root{
-        font-size: 14px;
+@media screen and (max-width: 464px) {
+    #tetris {
+        padding: 20px;
+    }
+    #panel {
+        padding-left: 20px;
     }
 }
 
-@media screen and (max-width: 464px) {
-    #tetris #panel .next-piece{
-        /* height: 80px;
-        width: 80px; */
+@media screen and (max-width: 410px) {
+    :root {
+        font-size: 10px;
+    }
+    #tetris #panel .next-piece #preview-canvas{
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    #tetris {
+        padding: 10px;
+    }
+    #panel {
+        padding-left: 10px;
+    }
+    #tetris #panel .next-piece #preview-canvas{
+        height: 40px;
+        width: 40px;
     }
 }

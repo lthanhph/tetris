@@ -31,7 +31,9 @@
                 </div>
                 <div class="preview">
                     <h6 class="h6 tittle user-select-none">Next</h6>
-                    <div class="next-piece d-flex justify-content-center align-items-center p-3 bg-dark rounded"></div>
+                    <div class="next-piece d-flex justify-content-center align-items-center p-3 bg-dark rounded">
+                        <canvas id="preview-canvas"></canvas>
+                    </div>
                 </div>
             </div>
             <button class="game-start btn btn-lg btn-dark w-100 fs-6">Start</button>
