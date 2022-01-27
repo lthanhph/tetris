@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="tetris" class="bg-secondary text-light">
+        <div class="game-wrapper position-relative d-flex flex-column">
+            <canvas id="game"></canvas>
+            <div class="game-message position-absolute w-100 h-100">
+                <h3 class="message h3 text-light text-capitalize"></h3>
+            </div>
+        </div>
+        <div id="panel">
+            <div class="info w-100">
+                <div class="record mb-4">
+                    <h6 class="h6 title user-select-none">Record</h6>
+                    <div class="numb-wrapper rounded bg-dark">
+                        <h4 class="h4 numb"></h4>
+                    </div>
+                </div>
+                <div class="preview">
+                    <h6 class="h6 tittle user-select-none">Next</h6>
+                    <div class="next-piece d-flex justify-content-center align-items-center p-3 bg-dark rounded"></div>
+                </div>
+            </div>
+            <button class="game-start btn btn-lg btn-dark w-100 fs-6">Start</button>
+            <button class="game-pause btn btn-lg btn-dark w-100 fs-6">Pause</button>
+            <button class="game-continue btn btn-lg btn-dark w-100 fs-6">Continue</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="js/constant.js"></script>
+    <script src="js/dot.js"></script>
+    <script src="js/piece.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+
+</html>
