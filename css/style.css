@@ -1,5 +1,5 @@
 html, body{
-    min-height: 100%;
+    min-height: 100vh;
     background: black;
     font-family: 'Press Start 2P', cursive;
 }
@@ -9,7 +9,6 @@ html, body{
     padding: 30px;
     margin: 0 auto;
     display: flex;
-    border: 1px solid black;
 }
 #game {
     border: 1px solid black;
@@ -66,4 +65,30 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        background: #6c757d;
+    }
+    #tetris {
+        height: 100%;
+        width: 100%;
+    }
+    #tetris #panel{
+        width: unset;
+    }
+}
+
+@media screen and (max-width: 555px) {
+    :root{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 464px) {
+    #tetris #panel .next-piece{
+        /* height: 80px;
+        width: 80px; */
+    }
 }
