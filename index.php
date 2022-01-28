@@ -18,7 +18,7 @@
         <div class="game-wrapper position-relative d-flex flex-column">
             <canvas id="game"></canvas>
             <div class="game-message position-absolute w-100 h-100">
-                <h3 class="message h3 text-light text-capitalize"></h3>
+                <h3 class="message h3 text-light text-capitalize user-select-none"></h3>
             </div>
         </div>
         <div id="panel">
@@ -26,7 +26,7 @@
                 <div class="record mb-4">
                     <h6 class="h6 title user-select-none">Record</h6>
                     <div class="numb-wrapper rounded bg-dark">
-                        <h4 class="h4 numb"></h4>
+                        <h4 class="h4 numb user-select-none"></h4>
                     </div>
                 </div>
                 <div class="preview">

@@ -299,52 +299,43 @@ class Game {
         document.body.addEventListener('touchmove', (event) => {
             event.preventDefault();
             if (!this.isGameOver() && !this.isPause()) {
-                var swipe = this.calculateGesture(event);
-                switch (swipe) {
-                    case 'right': this.piece.goRight();
-                        break;
-                    case 'left': this.piece.goLeft();
-                        break;
-                    case 'down': this.piece.goBottom();
-                        break;
+
+                // prevent getting a multi-move
+                if (!TOUCH_START.X || !TOUCH_START.Y) return;
+
+                var endX = event.touches[0].clientX;
+                var endY = event.touches[0].clientY;
+                var distanceX = endX - TOUCH_START.X;
+                var distanceY = endY - TOUCH_START.Y;
+
+                var min = 30;
+                var tooShort = Math.abs(distanceX) < min && Math.abs(distanceY) < min;
+                if (tooShort) return;
+
+                var horizontal = Math.abs(distanceX) > Math.abs(distanceY);
+                var vertical = Math.abs(distanceY) > Math.abs(distanceX);
+                var swipeRight = horizontal && distanceX > 0;
+                var swipeLeft = horizontal && distanceX < 0;
+                var swipeDown = vertical && distanceY > 0;
+
+                if (swipeRight) this.piece.goRight();
+                if (swipeLeft) this.piece.goLeft();
+                if (swipeDown) this.piece.goBottom();
+
+                if (horizontal) {
+                    // continue
+                    TOUCH_START.X = endX;
+                    TOUCH_START.Y = endY;
+                } else {
+                    // prevent
+                    TOUCH_START.X = 0;
+                    TOUCH_START.Y = 0;
                 }
             }
+
         }, { passive: false /* prevent default on chrome */ });
     }
 
-    calculateGesture(event) {
-
-        // prevent getting a multi-move
-        if (!TOUCH_START.X || !TOUCH_START.Y) return false;
-
-        var endX = event.touches[0].clientX;
-        var endY = event.touches[0].clientY;
-        var distanceX = endX - TOUCH_START.X;
-        var distanceY = endY - TOUCH_START.Y;
-
-        var min = 30;
-        var tooShort = Math.abs(distanceX) < min && Math.abs(distanceY) < min;
-        if (tooShort) {
-            return;
-        } else {
-            // update for continue swipe
-            TOUCH_START.X = endX;
-            // prevent swipe down multiple time
-            TOUCH_START.Y = 0;
-        }
-
-        var horizontal = Math.abs(distanceX) > Math.abs(distanceY);
-        var vertical = Math.abs(distanceY) > Math.abs(distanceX);
-        var swipeRight = horizontal && distanceX > 0;
-        var swipeLeft = horizontal && distanceX < 0;
-        var swipeDown = vertical && distanceY > 0;
-
-        // this.resetTouchStart();
-
-        if (swipeRight) return 'right';
-        if (swipeLeft) return 'left';
-        if (swipeDown) return 'down';
-    }
 }
 
 var game = new Game();
