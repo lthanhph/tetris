@@ -275,11 +275,11 @@ class Game {
         });
     }
 
-    resetTouchStart() {
-        // reset
-        TOUCH_START.X = null;
-        TOUCH_START.Y = null;
-    }
+    // resetTouchStart() {
+    //     // reset
+    //     TOUCH_START.X = null;
+    //     TOUCH_START.Y = null;
+    // }
 
     touch() {
         document.body.addEventListener('touchend', (event) => {
@@ -297,6 +297,7 @@ class Game {
 
     swipe() {
         document.body.addEventListener('touchmove', (event) => {
+            event.preventDefault();
             if (!this.isGameOver() && !this.isPause()) {
                 var swipe = this.calculateGesture(event);
                 switch (swipe) {
@@ -308,13 +309,13 @@ class Game {
                         break;
                 }
             }
-        });
+        }, { passive: false /* prevent default on chrome */ });
     }
 
     calculateGesture(event) {
 
         // prevent getting a multi-move
-        if (!TOUCH_START.X || !TOUCH_START.Y) return false;
+        // if (!TOUCH_START.X || !TOUCH_START.Y) return false;
 
         var endX = event.touches[0].clientX;
         var endY = event.touches[0].clientY;
