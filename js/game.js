@@ -315,7 +315,7 @@ class Game {
     calculateGesture(event) {
 
         // prevent getting a multi-move
-        // if (!TOUCH_START.X || !TOUCH_START.Y) return false;
+        if (!TOUCH_START.X || !TOUCH_START.Y) return false;
 
         var endX = event.touches[0].clientX;
         var endY = event.touches[0].clientY;
@@ -327,9 +327,10 @@ class Game {
         if (tooShort) {
             return;
         } else {
-            // reset for continue swipe
+            // update for continue swipe
             TOUCH_START.X = endX;
-            TOUCH_START.Y = endY;
+            // prevent swipe down multiple time
+            TOUCH_START.Y = 0;
         }
 
         var horizontal = Math.abs(distanceX) > Math.abs(distanceY);
