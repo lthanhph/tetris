@@ -1,3 +1,5 @@
+const APP_URL = window.location.href;
+
 const DOT_SIZE = 25;
 const SPACE = 2;
 

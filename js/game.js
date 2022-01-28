@@ -4,6 +4,7 @@ class Game {
     context;
     board;
     record;
+    audio;
 
     // preview area
     next;
@@ -35,6 +36,8 @@ class Game {
         // record
         this.resetRecord();
 
+        this.audio = new Audio(APP_URL + 'audio/soundtrack.mp3');
+
         // board
         this.board = new Board(this.context);
         this.board.clear();
@@ -55,6 +58,7 @@ class Game {
         this.showPauseBtn();
         this.loop();
         this.fall();
+        this.playAudio();
     }
 
     isPause() {
@@ -65,11 +69,13 @@ class Game {
     pause() {
         if (this.gameFall) this.stopfall();
         this.showMessage('pause');
+        this.audio.pause();
     }
 
     continue() {
         if (!this.gameFall) this.fall();
         this.hideMessage();
+        this.audio.play();
     }
 
     loop() {
@@ -94,6 +100,16 @@ class Game {
     resetRecord() {
         this.record = 0;
         this.showRecord();
+    }
+
+    playAudio() {
+        this.audio.loop = true;
+        this.audio.play();
+    }
+
+    stopAudio() {
+        this.audio.pause();
+        this.audio.currentTime = 0;
     }
 
     drawNextPiece() {
@@ -177,6 +193,7 @@ class Game {
         this.previewBoard.clear();
         this.showMessage('game over');
         this.showStartBtn();
+        this.stopAudio();
     }
 
     showMessage(text) {
