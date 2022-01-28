@@ -209,55 +209,140 @@ class Game {
 
     listenEvent() {
         // keyboard
-        document.body.addEventListener('keydown', (event) => {
-            if (!this.isGameOver() && !this.isPause()) {
-                this.keyboardEvent(event);
-            }
-        });
+        this.keyboardEvent();
 
         // btn
-        window.addEventListener('DOMContentLoaded', () => { this.btnEvent() });
+        this.btnEvent();
+
+
+        // touch
+        this.getTouchStart();
+        this.touch();
+        this.swipe();
     }
 
-    keyboardEvent(event) {
-        switch (event.code) {
-            case 'ArrowDown': this.piece.goBottom();
-                break;
-            case 'ArrowRight': this.piece.goRight();
-                break;
-            case 'ArrowLeft': this.piece.goLeft();
-                break;
-            case 'ArrowUp': this.piece.rotate();
-                break;
-            case 'Space': this.piece.goBottom();
-                break;
-        }
+    keyboardEvent() {
+        document.body.addEventListener('keydown', (event) => {
+            if (!this.isGameOver() && !this.isPause()) {
+                switch (event.code) {
+                    case 'ArrowDown': this.piece.goBottom();
+                        break;
+                    case 'ArrowRight': this.piece.goRight();
+                        break;
+                    case 'ArrowLeft': this.piece.goLeft();
+                        break;
+                    case 'ArrowUp': this.piece.rotate();
+                        break;
+                    case 'Space': this.piece.goBottom();
+                        break;
+                }
+            }
+        });
     }
 
     btnEvent() {
-        var startBtn = document.querySelector('.game-start');
-        var pauseBtn = document.querySelector('.game-pause');
-        var continueBtn = document.querySelector('.game-continue');
+        window.addEventListener('DOMContentLoaded', () => {
 
-        // start
-        startBtn.addEventListener('click', () => {
-            game.start();
-            this.showPauseBtn();
-        });
+            var startBtn = document.querySelector('.game-start');
+            var pauseBtn = document.querySelector('.game-pause');
+            var continueBtn = document.querySelector('.game-continue');
 
-        // pause
-        pauseBtn.addEventListener('click', () => {
-            game.pause();
-            this.showContinueBtn();
-        });
+            // start
+            startBtn.addEventListener('click', () => {
+                game.start();
+                this.showPauseBtn();
+            });
 
-        // continue
-        continueBtn.addEventListener('click', () => {
-            game.continue();
-            this.showPauseBtn();
+            // pause
+            pauseBtn.addEventListener('click', () => {
+                game.pause();
+                this.showContinueBtn();
+            });
+
+            // continue
+            continueBtn.addEventListener('click', () => {
+                game.continue();
+                this.showPauseBtn();
+            });
         });
     }
 
+    getTouchStart() {
+        // start
+        document.body.addEventListener('touchstart', (event) => {
+            TOUCH_START.X = event.touches[0].clientX;
+            TOUCH_START.Y = event.touches[0].clientY;
+        });
+    }
+
+    resetTouchStart() {
+        // reset
+        TOUCH_START.X = null;
+        TOUCH_START.Y = null;
+    }
+
+    touch() {
+        document.body.addEventListener('touchend', (event) => {
+            if (!this.isGameOver() && !this.isPause()) {
+
+                var endX = event.changedTouches[0].clientX;
+                var endY = event.changedTouches[0].clientY;
+                var notTouchMove = TOUCH_START.X == endX && TOUCH_START.Y == endY;
+                var btnIsTarget = event.changedTouches[0].target.classList.contains('btn');
+
+                if (notTouchMove && !btnIsTarget) this.piece.rotate();
+            }
+        });
+    }
+
+    swipe() {
+        document.body.addEventListener('touchmove', (event) => {
+            if (!this.isGameOver() && !this.isPause()) {
+                var swipe = this.calculateGesture(event);
+                switch (swipe) {
+                    case 'right': this.piece.goRight();
+                        break;
+                    case 'left': this.piece.goLeft();
+                        break;
+                    case 'down': this.piece.goBottom();
+                        break;
+                }
+            }
+        });
+    }
+
+    calculateGesture(event) {
+
+        // prevent getting a multi-move
+        if (!TOUCH_START.X || !TOUCH_START.Y) return false;
+
+        var endX = event.touches[0].clientX;
+        var endY = event.touches[0].clientY;
+        var distanceX = endX - TOUCH_START.X;
+        var distanceY = endY - TOUCH_START.Y;
+
+        var min = 30;
+        var tooShort = Math.abs(distanceX) < min && Math.abs(distanceY) < min;
+        if (tooShort) {
+            return;
+        } else {
+            // reset for continue swipe
+            TOUCH_START.X = endX;
+            TOUCH_START.Y = endY;
+        }
+
+        var horizontal = Math.abs(distanceX) > Math.abs(distanceY);
+        var vertical = Math.abs(distanceY) > Math.abs(distanceX);
+        var swipeRight = horizontal && distanceX > 0;
+        var swipeLeft = horizontal && distanceX < 0;
+        var swipeDown = vertical && distanceY > 0;
+
+        // this.resetTouchStart();
+
+        if (swipeRight) return 'right';
+        if (swipeLeft) return 'left';
+        if (swipeDown) return 'down';
+    }
 }
 
 var game = new Game();

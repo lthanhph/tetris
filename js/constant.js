@@ -19,7 +19,6 @@ const START_COL = 4;
 
 // color
 const BOARD_BG = '#212529';
-
 const BLUE = '#0d6efd';
 const PURPLE = '#6f42c1';
 const RED = '#dc3545';
@@ -27,3 +26,5 @@ const YELLOW = '#ffc107';
 const GREEN = '#198754';
 const ORANGE = '#fd7e14';
 const CYAN = '#0dcaf0';
+
+const TOUCH_START = { X: null, Y: null };

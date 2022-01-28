@@ -78,22 +78,15 @@ body {
     justify-content: center;
 }
 
-@media screen and (max-width: 600px) {
-   
-}
-
 @media screen and (max-width: 555px) {
     :root{
-        font-size: 14px;
+        font-size: 12px;
     }
     body {
         background: #6c757d;
     }
     #tetris {
         width: 100%;
-    }
-    #tetris #panel{
-        width: unset;
     }
 }
 
@@ -105,6 +98,22 @@ body {
         padding-left: 20px;
     }
 }
+
+@media screen and (max-width: 430px) {
+    #tetris {
+        height: fit-content;
+    }
+    #tetris #panel{
+        width: 37%;
+    }
+    #tetris .game-wrapper{
+        width: 63%;
+        height: fit-content;
+    }
+    #tetris #game{
+        height: auto;
+    }
+} 
 
 @media screen and (max-width: 410px) {
     :root {
