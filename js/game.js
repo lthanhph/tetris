@@ -289,14 +289,10 @@ class Game {
         document.body.addEventListener('touchstart', (event) => {
             TOUCH_START.X = event.touches[0].clientX;
             TOUCH_START.Y = event.touches[0].clientY;
+            CONTINUE.X = null;
+            CONTINUE.Y = null;
         });
     }
-
-    // resetTouchStart() {
-    //     // reset
-    //     TOUCH_START.X = null;
-    //     TOUCH_START.Y = null;
-    // }
 
     touch() {
         document.body.addEventListener('touchend', (event) => {
@@ -317,37 +313,41 @@ class Game {
             event.preventDefault();
             if (!this.isGameOver() && !this.isPause()) {
 
-                // prevent getting a multi-move
-                if (!TOUCH_START.X || !TOUCH_START.Y) return;
-
+                var startX = CONTINUE.X ? CONTINUE.X : TOUCH_START.X;
+                var startY = CONTINUE.Y ? CONTINUE.Y : TOUCH_START.Y;
                 var endX = event.touches[0].clientX;
                 var endY = event.touches[0].clientY;
-                var distanceX = endX - TOUCH_START.X;
-                var distanceY = endY - TOUCH_START.Y;
-
-                var min = 30;
-                var tooShort = Math.abs(distanceX) < min && Math.abs(distanceY) < min;
-                if (tooShort) return;
-
+                var distanceX = endX - startX;
+                var distanceY = endY - startY;
                 var horizontal = Math.abs(distanceX) > Math.abs(distanceY);
                 var vertical = Math.abs(distanceY) > Math.abs(distanceX);
-                var swipeRight = horizontal && distanceX > 0;
-                var swipeLeft = horizontal && distanceX < 0;
-                var swipeDown = vertical && distanceY > 0;
 
+                if (horizontal) {
+                    // too short
+                    if (Math.abs(distanceX) < 30) return;
+
+                    // gesture
+                    var swipeRight = distanceX > 0;
+                    var swipeLeft = distanceX < 0;
+                } 
+                if (vertical) {
+                    // do not continue
+                    if (CONTINUE.X && CONTINUE.Y) return;
+                    
+                    // too short
+                    if (Math.abs(distanceY) < 50) return;
+
+                    // gesture
+                    var swipeDown = distanceY > 0;
+                }
+                
                 if (swipeRight) this.piece.goRight();
                 if (swipeLeft) this.piece.goLeft();
                 if (swipeDown) this.piece.goBottom();
 
-                if (horizontal) {
-                    // continue
-                    TOUCH_START.X = endX;
-                    TOUCH_START.Y = endY;
-                } else {
-                    // prevent
-                    TOUCH_START.X = 0;
-                    TOUCH_START.Y = 0;
-                }
+                // continue
+                CONTINUE.X = endX;
+                CONTINUE.Y = endY;
             }
 
         }, { passive: false /* prevent default on chrome */ });

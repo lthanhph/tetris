@@ -30,3 +30,4 @@ const ORANGE = '#fd7e14';
 const CYAN = '#0dcaf0';
 
 const TOUCH_START = { X: null, Y: null };
+const CONTINUE = { X: null, Y: null };
